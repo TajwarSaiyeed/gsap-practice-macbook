@@ -2,6 +2,8 @@ import clsx from "clsx";
 import useMacbookStore, { DEFAULT_COLOR, DEFAULT_SCALE } from "../store";
 import { Box, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import MacbookModel14 from "./models/Macbook14";
+import StudioLights from "./studio-lights";
 
 const COLOR_SILVER = "#adb5bd";
 const COLOR_SPACE_GRAY = DEFAULT_COLOR;
@@ -71,7 +73,9 @@ const ProductViewer = () => {
         id="canvas"
         camera={{ position: [0, 2, 5], fov: 50, near: 0.1, far: 100 }}
       >
-        <Box position={[0, 0, 0]} scale={scale * 10} material-color={color} />
+        <StudioLights />
+
+        <MacbookModel14 scale={scale} position={[0, 0, 0]} />
         <OrbitControls enableZoom={false} />
       </Canvas>
     </section>
