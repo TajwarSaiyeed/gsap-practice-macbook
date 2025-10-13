@@ -1,7 +1,12 @@
 import React from "react";
+import Navbar from "./components/navbar";
 
 const App = () => {
-  return <h1 className="text-bold uppercase text-3xl text-indigo-700">App</h1>;
+  return (
+    <main>
+      <Navbar />
+    </main>
+  );
 };
 
 export default App;
