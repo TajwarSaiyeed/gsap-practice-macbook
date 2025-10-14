@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import useMacbookStore, { DEFAULT_COLOR, DEFAULT_SCALE } from "../store";
-import { Box, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import MacbookModel14 from "./models/Macbook14";
-import StudioLights from "./studio-lights";
+import StudioLights from "./three/studio-lights";
+import ModelSwitcher from "./three/model-switcher";
+import { useMediaQuery } from "react-responsive";
 
 const COLOR_SILVER = "#adb5bd";
 const COLOR_SPACE_GRAY = DEFAULT_COLOR;
@@ -19,6 +20,9 @@ const getSizeLabel = (scale) => {
 
 const ProductViewer = () => {
   const { color, setColor, scale, setScale } = useMacbookStore();
+
+  const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+
   return (
     <section id="product-viewer">
       <h2>Take a closer look.</h2>
@@ -75,8 +79,10 @@ const ProductViewer = () => {
       >
         <StudioLights />
 
-        <MacbookModel14 scale={scale} position={[0, 0, 0]} />
-        <OrbitControls enableZoom={false} />
+        <ModelSwitcher
+          scale={isMobile ? scale - 0.03 : scale}
+          isMobile={isMobile}
+        />
       </Canvas>
     </section>
   );
