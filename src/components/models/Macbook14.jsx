@@ -1,6 +1,8 @@
 import { useGLTF, useTexture } from "@react-three/drei";
 import useMacbookStore from "../../store";
 import { useEffect } from "react";
+import { noChangeParts } from "../../constants";
+import { Color } from "three";
 
 export default function MacbookModel14(props) {
   const { color } = useMacbookStore();
@@ -12,12 +14,12 @@ export default function MacbookModel14(props) {
   useEffect(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
-        if (child.material.name === "PaletteMaterial001") {
-          child.material.color.set(color);
+        if (!noChangeParts.includes(child.name)) {
+          child.material.color = new Color(color);
         }
       }
     });
-  }, [color]);
+  }, [color, scene]);
 
   return (
     <group {...props} dispose={null}>

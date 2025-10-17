@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import useMacbookStore, { DEFAULT_COLOR, DEFAULT_SCALE } from "../store";
 import { Canvas } from "@react-three/fiber";
-import MacbookModel14 from "./models/Macbook14";
 import StudioLights from "./three/studio-lights";
 import ModelSwitcher from "./three/model-switcher";
 import { useMediaQuery } from "react-responsive";
@@ -11,12 +10,6 @@ const COLOR_SPACE_GRAY = DEFAULT_COLOR;
 
 const SCALE_14 = 0.06;
 const SCALE_16 = DEFAULT_SCALE;
-
-const getSizeLabel = (scale) => {
-  if (scale === SCALE_14) return '14"';
-  if (scale === SCALE_16) return '16"';
-  return scale;
-};
 
 const ProductViewer = () => {
   const { color, setColor, scale, setScale } = useMacbookStore();
@@ -28,7 +21,8 @@ const ProductViewer = () => {
       <h2>Take a closer look.</h2>
       <div className="controls">
         <p className="info">
-          MacBook Pro {getSizeLabel(scale)} in {color}
+          MacBook Pro | {scale === SCALE_14 ? '14"' : '16"'} |{" "}
+          {color === COLOR_SILVER ? "Silver" : "Space Gray"}
         </p>
         <div className="flex-center gap-5 mt-5">
           <div className="color-control">
@@ -78,7 +72,6 @@ const ProductViewer = () => {
         camera={{ position: [0, 2, 5], fov: 50, near: 0.1, far: 100 }}
       >
         <StudioLights />
-
         <ModelSwitcher
           scale={isMobile ? scale - 0.03 : scale}
           isMobile={isMobile}
