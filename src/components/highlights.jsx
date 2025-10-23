@@ -1,26 +1,30 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
 const Highlights = () => {
   const isMobile = useMediaQuery({ maxWidth: "1024px" });
-
-  useGSAP(() => {
-    gsap.to([".left-column", ".right-column"], {
-      scrollTrigger: {
-        trigger: "#highlights",
-        start: isMobile ? "bottom bottom" : "top top",
-      },
-      y: 0,
-      opacity: 1,
-      stagger: 0.5,
-      duration: 1,
-      ease: "power1.out",
-    });
-  });
+  const sectionRef = useRef();
+  useGSAP(
+    () => {
+      gsap.to([".left-column", ".right-column"], {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: isMobile ? "bottom bottom" : "top top",
+        },
+        y: 0,
+        opacity: 1,
+        stagger: 0.5,
+        duration: 1,
+        ease: "power1.out",
+      });
+    },
+    { scope: sectionRef, dependencies: [isMobile] }
+  );
 
   return (
-    <section id="highlights">
+    <section id="highlights" ref={sectionRef}>
       <h2>There&apos;s never been a time to upgrade.</h2>
       <h3>Upgrade to the latest version for the best experience.</h3>
 
@@ -32,7 +36,7 @@ const Highlights = () => {
           </div>
 
           <div>
-            <img src="/sun.png" alt="sun" />
+            <img src="/sun.png" alt="Icon illustrating a bright display" />
             <p>
               A stunning <br /> Liquid Retina <br /> display.
             </p>
@@ -41,7 +45,7 @@ const Highlights = () => {
 
         <div className="right-column">
           <div className="apple-gradient">
-            <img src="/ai.png" alt="Ai" />
+            <img src="/ai.png" alt="Apple Intelligence logo" />
             <p>
               Built for <span>Apple Intelligence</span>
             </p>
